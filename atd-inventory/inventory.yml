@@ -4,13 +4,13 @@ all:
     cv_servers:
       hosts:
         cv_atd1:
-          ansible_host: atd-avd-v3-1-8bacb70c.topo.testdrive.arista.com
+          ansible_host: ansible5549-1-d2e62b20.topo.testdrive.arista.com
           ansible_user: arista
-          ansible_password: arista7he5
+          ansible_password: aristapsjq
     ATD_LAB:
       vars:
         ansible_user: arista
-        ansible_ssh_pass: arista7he5
+        ansible_ssh_pass: aristapsjq
       children:
         ATD_FABRIC:
           children:

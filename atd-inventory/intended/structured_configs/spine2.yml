@@ -11,6 +11,7 @@ switch_evpn_route_clients:
 - leaf4
 service_routing_protocols_model: multi-agent
 ip_routing: true
+ipv6_unicast_routing: true
 hardware_counters: null
 daemon_terminattr:
   ingestgrpcurl:
@@ -37,12 +38,7 @@ name_server:
   nodes:
   - 192.168.2.1
   - 8.8.8.8
-ntp_server:
-  local_interface:
-    vrf: MGMT
-    interface: Management1
-  nodes:
-  - 192.168.0.1
+ntp_server: null
 redundancy: null
 spanning_tree:
   mode: none
@@ -69,7 +65,7 @@ ethernet_interfaces:
     mtu: 1500
     type: routed
     shutdown: false
-    ip_address: 172.31.255.2/31
+    ipv6_enable: true
   Ethernet3:
     peer: leaf2
     peer_interface: Ethernet3
@@ -78,7 +74,7 @@ ethernet_interfaces:
     mtu: 1500
     type: routed
     shutdown: false
-    ip_address: 172.31.255.6/31
+    ipv6_enable: true
   Ethernet4:
     peer: leaf3
     peer_interface: Ethernet3
@@ -87,7 +83,7 @@ ethernet_interfaces:
     mtu: 1500
     type: routed
     shutdown: false
-    ip_address: 172.31.255.10/31
+    ipv6_enable: true
   Ethernet5:
     peer: leaf4
     peer_interface: Ethernet3
@@ -96,7 +92,7 @@ ethernet_interfaces:
     mtu: 1500
     type: routed
     shutdown: false
-    ip_address: 172.31.255.14/31
+    ipv6_enable: true
 loopback_interfaces:
   Loopback0:
     description: EVPN_Overlay_Peering
@@ -128,7 +124,11 @@ route_maps:
         type: permit
         match:
         - ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY
-peer_filters: null
+peer_filters:
+  LEAF-AS-RANGE:
+    sequence_numbers:
+      10:
+        match: as-range 65101-65132 result accept
 router_bgp:
   as: 65001
   router_id: 192.0.255.2
@@ -142,6 +142,7 @@ router_bgp:
     IPv4-UNDERLAY-PEERS:
       type: ipv4
       peer_filter: LEAF-AS-RANGE
+      bgp_listen_range_prefix: fe80::/10
       password: AQQvKeimxJu+uGQ/yYvv9w==
       maximum_routes: 12000
       send_community: true
@@ -154,35 +155,9 @@ router_bgp:
       send_community: true
       maximum_routes: 0
       next_hop_unchanged: true
-  neighbors:
-    172.31.255.3:
-      peer_group: IPv4-UNDERLAY-PEERS
-      remote_as: 65101
-    172.31.255.7:
-      peer_group: IPv4-UNDERLAY-PEERS
-      remote_as: 65101
-    172.31.255.11:
-      peer_group: IPv4-UNDERLAY-PEERS
-      remote_as: 65102
-    172.31.255.15:
-      peer_group: IPv4-UNDERLAY-PEERS
-      remote_as: 65102
-    192.0.255.3:
-      peer_group: EVPN-OVERLAY-PEERS
-      description: leaf1
-      remote_as: 65101
-    192.0.255.4:
-      peer_group: EVPN-OVERLAY-PEERS
-      description: leaf2
-      remote_as: 65101
-    192.0.255.5:
-      peer_group: EVPN-OVERLAY-PEERS
-      description: leaf3
-      remote_as: 65102
-    192.0.255.6:
-      peer_group: EVPN-OVERLAY-PEERS
-      description: leaf4
-      remote_as: 65102
+      bgp_listen_range_prefix: 192.0.255.0/24
+      peer_filter: LEAF-AS-RANGE
+  neighbors: null
   redistribute_routes:
     connected:
       route_map: RM-CONN-2-BGP

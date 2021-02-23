@@ -30,12 +30,10 @@
 
 | Type | Node | Node Interface | Peer Type | Peer Node | Peer Interface |
 | ---- | ---- | -------------- | --------- | ----------| -------------- |
-| l3leaf | leaf1 | Ethernet1 | mlag_peer | leaf2 | Ethernet1 |
 | l3leaf | leaf1 | Ethernet2 | spine | spine1 | Ethernet2 |
 | l3leaf | leaf1 | Ethernet3 | spine | spine2 | Ethernet2 |
 | l3leaf | leaf2 | Ethernet2 | spine | spine1 | Ethernet3 |
 | l3leaf | leaf2 | Ethernet3 | spine | spine2 | Ethernet3 |
-| l3leaf | leaf3 | Ethernet1 | mlag_peer | leaf4 | Ethernet1 |
 | l3leaf | leaf3 | Ethernet2 | spine | spine1 | Ethernet4 |
 | l3leaf | leaf3 | Ethernet3 | spine | spine2 | Ethernet4 |
 | l3leaf | leaf4 | Ethernet2 | spine | spine1 | Ethernet5 |
@@ -47,20 +45,11 @@
 
 | P2P Summary | Available Addresses | Assigned addresses | Assigned Address % |
 | ----------- | ------------------- | ------------------ | ------------------ |
-| 172.31.255.0/24 | 256 | 16 | 6.25 % |
 
 ### Point-To-Point Links Node Allocation
 
 | Node | Node Interface | Node IP Address | Peer Node | Peer Interface | Peer IP Address |
 | ---- | -------------- | --------------- | --------- | -------------- | --------------- |
-| leaf1 | Ethernet2 | 172.31.255.1/31 | spine1 | Ethernet2 | 172.31.255.0/31 |
-| leaf1 | Ethernet3 | 172.31.255.3/31 | spine2 | Ethernet2 | 172.31.255.2/31 |
-| leaf2 | Ethernet2 | 172.31.255.5/31 | spine1 | Ethernet3 | 172.31.255.4/31 |
-| leaf2 | Ethernet3 | 172.31.255.7/31 | spine2 | Ethernet3 | 172.31.255.6/31 |
-| leaf3 | Ethernet2 | 172.31.255.9/31 | spine1 | Ethernet4 | 172.31.255.8/31 |
-| leaf3 | Ethernet3 | 172.31.255.11/31 | spine2 | Ethernet4 | 172.31.255.10/31 |
-| leaf4 | Ethernet2 | 172.31.255.13/31 | spine1 | Ethernet5 | 172.31.255.12/31 |
-| leaf4 | Ethernet3 | 172.31.255.15/31 | spine2 | Ethernet5 | 172.31.255.14/31 |
 
 ### Overlay Loopback Interfaces (BGP EVPN Peering)
 
@@ -90,6 +79,6 @@
 | POD | Node | Loopback1 |
 | --- | ---- | --------- |
 | ATD_FABRIC | leaf1 | 192.0.254.3/32 |
-| ATD_FABRIC | leaf2 | 192.0.254.3/32 |
+| ATD_FABRIC | leaf2 | 192.0.254.4/32 |
 | ATD_FABRIC | leaf3 | 192.0.254.5/32 |
-| ATD_FABRIC | leaf4 | 192.0.254.5/32 |
+| ATD_FABRIC | leaf4 | 192.0.254.6/32 |

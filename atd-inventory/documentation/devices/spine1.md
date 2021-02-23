@@ -137,23 +137,7 @@ DNS domain lookup not defined
 
 ## NTP
 
-### NTP Summary
-
-- Local Interface: Management1
-
-- VRF: MGMT
-
-| Node | Primary |
-| ---- | ------- |
-| 192.168.0.1 | true |
-
-### NTP Device Configuration
-
-```eos
-!
-ntp local-interface vrf MGMT Management1
-ntp server vrf MGMT 192.168.0.1 prefer
-```
+No NTP servers defined
 
 ## PTP
 
@@ -371,15 +355,6 @@ No Interface Defaults defined
 
 *Inherited from Port-Channel Interface
 
-#### IPv4
-
-| Interface | Description | Type | Channel Group | IP Address | VRF |  MTU | Shutdown | ACL In | ACL Out |
-| --------- | ----------- | -----| ------------- | ---------- | ----| ---- | -------- | ------ | ------- |
-| Ethernet2 |  P2P_LINK_TO_LEAF1_Ethernet2  |  routed  | - |  172.31.255.0/31  |  default  |  1500  |  false  |  -  |  -  |
-| Ethernet3 |  P2P_LINK_TO_LEAF2_Ethernet2  |  routed  | - |  172.31.255.4/31  |  default  |  1500  |  false  |  -  |  -  |
-| Ethernet4 |  P2P_LINK_TO_LEAF3_Ethernet2  |  routed  | - |  172.31.255.8/31  |  default  |  1500  |  false  |  -  |  -  |
-| Ethernet5 |  P2P_LINK_TO_LEAF4_Ethernet2  |  routed  | - |  172.31.255.12/31  |  default  |  1500  |  false  |  -  |  -  |
-
 ### Ethernet Interfaces Device Configuration
 
 ```eos
@@ -388,25 +363,25 @@ interface Ethernet2
    description P2P_LINK_TO_LEAF1_Ethernet2
    no shutdown
    no switchport
-   ip address 172.31.255.0/31
+   ipv6 enable
 !
 interface Ethernet3
    description P2P_LINK_TO_LEAF2_Ethernet2
    no shutdown
    no switchport
-   ip address 172.31.255.4/31
+   ipv6 enable
 !
 interface Ethernet4
    description P2P_LINK_TO_LEAF3_Ethernet2
    no shutdown
    no switchport
-   ip address 172.31.255.8/31
+   ipv6 enable
 !
 interface Ethernet5
    description P2P_LINK_TO_LEAF4_Ethernet2
    no shutdown
    no switchport
-   ip address 172.31.255.12/31
+   ipv6 enable
 ```
 
 ## Port-Channel Interfaces
@@ -476,8 +451,14 @@ no ip routing vrf MGMT
 
 | VRF | Routing Enabled |
 | --- | --------------- |
-| default | false || MGMT | false |
+| default | true | | MGMT | false |
 
+### IPv6 Routing Device Configuration
+
+```eos
+!
+ipv6 unicast-routing
+```
 
 ## Static Routes
 
@@ -533,6 +514,7 @@ Router ISIS not defined
 | Settings | Value |
 | -------- | ----- |
 | Address Family | evpn |
+| Listen range prefix | 192.0.255.0/24 |
 | Next-hop unchanged | True |
 | Source | Loopback0 |
 | Bfd | true |
@@ -545,21 +527,9 @@ Router ISIS not defined
 | Settings | Value |
 | -------- | ----- |
 | Address Family | ipv4 |
+| Listen range prefix | fe80::/10 |
 | Send community | true |
 | Maximum routes | 12000 |
-
-### BGP Neighbors
-
-| Neighbor | Remote AS | VRF |
-| -------- | --------- | --- |
-| 172.31.255.1 | 65101 | default |
-| 172.31.255.5 | 65101 | default |
-| 172.31.255.9 | 65102 | default |
-| 172.31.255.13 | 65102 | default |
-| 192.0.255.3 | 65101 | default |
-| 192.0.255.4 | 65101 | default |
-| 192.0.255.5 | 65102 | default |
-| 192.0.255.6 | 65102 | default |
 
 ### Router BGP EVPN Address Family
 
@@ -578,6 +548,8 @@ router bgp 65001
    graceful-restart restart-time 300
    graceful-restart
    maximum-paths 4 ecmp 4
+   bgp listen range 192.0.255.0/24 peer-group EVPN-OVERLAY-PEERS peer-filter LEAF-AS-RANGE
+   bgp listen range fe80::/10 peer-group IPv4-UNDERLAY-PEERS peer-filter LEAF-AS-RANGE
    neighbor EVPN-OVERLAY-PEERS peer group
    neighbor EVPN-OVERLAY-PEERS next-hop-unchanged
    neighbor EVPN-OVERLAY-PEERS update-source Loopback0
@@ -590,26 +562,6 @@ router bgp 65001
    neighbor IPv4-UNDERLAY-PEERS password 7 AQQvKeimxJu+uGQ/yYvv9w==
    neighbor IPv4-UNDERLAY-PEERS send-community
    neighbor IPv4-UNDERLAY-PEERS maximum-routes 12000
-   neighbor 172.31.255.1 peer group IPv4-UNDERLAY-PEERS
-   neighbor 172.31.255.1 remote-as 65101
-   neighbor 172.31.255.5 peer group IPv4-UNDERLAY-PEERS
-   neighbor 172.31.255.5 remote-as 65101
-   neighbor 172.31.255.9 peer group IPv4-UNDERLAY-PEERS
-   neighbor 172.31.255.9 remote-as 65102
-   neighbor 172.31.255.13 peer group IPv4-UNDERLAY-PEERS
-   neighbor 172.31.255.13 remote-as 65102
-   neighbor 192.0.255.3 peer group EVPN-OVERLAY-PEERS
-   neighbor 192.0.255.3 remote-as 65101
-   neighbor 192.0.255.3 description leaf1
-   neighbor 192.0.255.4 peer group EVPN-OVERLAY-PEERS
-   neighbor 192.0.255.4 remote-as 65101
-   neighbor 192.0.255.4 description leaf2
-   neighbor 192.0.255.5 peer group EVPN-OVERLAY-PEERS
-   neighbor 192.0.255.5 remote-as 65102
-   neighbor 192.0.255.5 description leaf3
-   neighbor 192.0.255.6 peer group EVPN-OVERLAY-PEERS
-   neighbor 192.0.255.6 remote-as 65102
-   neighbor 192.0.255.6 description leaf4
    redistribute connected route-map RM-CONN-2-BGP
    !
    address-family evpn
@@ -618,6 +570,7 @@ router bgp 65001
    address-family ipv4
       no neighbor EVPN-OVERLAY-PEERS activate
       neighbor IPv4-UNDERLAY-PEERS activate
+      neighbor IPv4-UNDERLAY-PEERS next-hop address-family ipv6 originate
 ```
 
 ## Router BFD
@@ -658,7 +611,21 @@ Community-lists not defined
 
 ## Peer Filters
 
-No peer filters defined
+### Peer Filters Summary
+
+#### LEAF-AS-RANGE
+
+| Sequence | Match |
+| -------- | ----- |
+| 10 | as-range 65101-65132 result accept |
+
+### Peer Filters Device Configuration
+
+```eos
+!
+peer-filter LEAF-AS-RANGE
+   10 match as-range 65101-65132 result accept
+```
 
 ## Prefix-lists
 
