@@ -89,7 +89,9 @@ port_channel_interfaces:
     shutdown: false
     mode: access
     vlans: 110
-    mlag: 4
+    esi: 0000:0000:0303:0202:0202
+    rt: 03:03:02:02:02:02
+    lacp_id: 0303.0202.0202
 ethernet_interfaces:
   Ethernet2:
     peer: spine1

@@ -13,16 +13,18 @@ CVP_CONFIGLETS:
     !\nvlan 110\n   name Tenant_A_OP_Zone_1\n!\nvlan 160\n   name Tenant_A_VMOTION\n\
     !\nvrf instance MGMT\n!\nvrf instance Tenant_A_OP_Zone\n!\ninterface Port-Channel4\n\
     \   description host1_PortChanne1\n   no shutdown\n   switchport\n   switchport\
-    \ access vlan 110\n   mlag 4\n!\ninterface Ethernet2\n   description P2P_LINK_TO_SPINE1_Ethernet2\n\
-    \   no shutdown\n   no switchport\n   ipv6 enable\n!\ninterface Ethernet3\n  \
-    \ description P2P_LINK_TO_SPINE2_Ethernet2\n   no shutdown\n   no switchport\n\
-    \   ipv6 enable\n!\ninterface Ethernet4\n   description host1_Eth1\n   no shutdown\n\
-    \   channel-group 4 mode active\n!\ninterface Ethernet5\n   description host1_Eth2\n\
-    \   no shutdown\n   channel-group 4 mode active\n!\ninterface Loopback0\n   description\
-    \ EVPN_Overlay_Peering\n   no shutdown\n   ip address 192.0.255.3/32\n!\ninterface\
-    \ Loopback1\n   description VTEP_VXLAN_Tunnel_Source\n   no shutdown\n   ip address\
-    \ 192.0.254.3/32\n!\ninterface Loopback100\n   description Tenant_A_OP_Zone_VTEP_DIAGNOSTICS\n\
-    \   no shutdown\n   vrf Tenant_A_OP_Zone\n   ip address 10.255.1.3/32\n!\ninterface\
+    \ access vlan 110\n   !\n    evpn ethernet-segment\n       identifier 0000:0000:0303:0202:0101\n\
+    \       route-target import 03:03:02:02:01:01\n   !\n   lacp system-id 0303.0202.0101\n\
+    !\ninterface Ethernet2\n   description P2P_LINK_TO_SPINE1_Ethernet2\n   no shutdown\n\
+    \   no switchport\n   ipv6 enable\n!\ninterface Ethernet3\n   description P2P_LINK_TO_SPINE2_Ethernet2\n\
+    \   no shutdown\n   no switchport\n   ipv6 enable\n!\ninterface Ethernet4\n  \
+    \ description host1_Eth1\n   no shutdown\n   channel-group 4 mode active\n!\n\
+    interface Ethernet5\n   description host1_Eth2\n   no shutdown\n   channel-group\
+    \ 4 mode active\n!\ninterface Loopback0\n   description EVPN_Overlay_Peering\n\
+    \   no shutdown\n   ip address 192.0.255.3/32\n!\ninterface Loopback1\n   description\
+    \ VTEP_VXLAN_Tunnel_Source\n   no shutdown\n   ip address 192.0.254.3/32\n!\n\
+    interface Loopback100\n   description Tenant_A_OP_Zone_VTEP_DIAGNOSTICS\n   no\
+    \ shutdown\n   vrf Tenant_A_OP_Zone\n   ip address 10.255.1.3/32\n!\ninterface\
     \ Management1\n   description oob_management\n   no shutdown\n   vrf MGMT\n  \
     \ ip address 192.168.0.12/24\n!\ninterface Vlan110\n   description Tenant_A_OP_Zone_1\n\
     \   no shutdown\n   vrf Tenant_A_OP_Zone\n   ip address virtual 10.1.10.1/24\n\
@@ -76,16 +78,18 @@ CVP_CONFIGLETS:
     !\nvlan 110\n   name Tenant_A_OP_Zone_1\n!\nvlan 160\n   name Tenant_A_VMOTION\n\
     !\nvrf instance MGMT\n!\nvrf instance Tenant_A_OP_Zone\n!\ninterface Port-Channel4\n\
     \   description host1_PortChanne1\n   no shutdown\n   switchport\n   switchport\
-    \ access vlan 110\n   mlag 4\n!\ninterface Ethernet2\n   description P2P_LINK_TO_SPINE1_Ethernet3\n\
-    \   no shutdown\n   no switchport\n   ipv6 enable\n!\ninterface Ethernet3\n  \
-    \ description P2P_LINK_TO_SPINE2_Ethernet3\n   no shutdown\n   no switchport\n\
-    \   ipv6 enable\n!\ninterface Ethernet4\n   description host1_Eth3\n   no shutdown\n\
-    \   channel-group 4 mode active\n!\ninterface Ethernet5\n   description host1_Eth4\n\
-    \   no shutdown\n   channel-group 4 mode active\n!\ninterface Loopback0\n   description\
-    \ EVPN_Overlay_Peering\n   no shutdown\n   ip address 192.0.255.4/32\n!\ninterface\
-    \ Loopback1\n   description VTEP_VXLAN_Tunnel_Source\n   no shutdown\n   ip address\
-    \ 192.0.254.4/32\n!\ninterface Loopback100\n   description Tenant_A_OP_Zone_VTEP_DIAGNOSTICS\n\
-    \   no shutdown\n   vrf Tenant_A_OP_Zone\n   ip address 10.255.1.4/32\n!\ninterface\
+    \ access vlan 110\n   !\n    evpn ethernet-segment\n       identifier 0000:0000:0303:0202:0101\n\
+    \       route-target import 03:03:02:02:01:01\n   !\n   lacp system-id 0303.0202.0101\n\
+    !\ninterface Ethernet2\n   description P2P_LINK_TO_SPINE1_Ethernet3\n   no shutdown\n\
+    \   no switchport\n   ipv6 enable\n!\ninterface Ethernet3\n   description P2P_LINK_TO_SPINE2_Ethernet3\n\
+    \   no shutdown\n   no switchport\n   ipv6 enable\n!\ninterface Ethernet4\n  \
+    \ description host1_Eth3\n   no shutdown\n   channel-group 4 mode active\n!\n\
+    interface Ethernet5\n   description host1_Eth4\n   no shutdown\n   channel-group\
+    \ 4 mode active\n!\ninterface Loopback0\n   description EVPN_Overlay_Peering\n\
+    \   no shutdown\n   ip address 192.0.255.4/32\n!\ninterface Loopback1\n   description\
+    \ VTEP_VXLAN_Tunnel_Source\n   no shutdown\n   ip address 192.0.254.4/32\n!\n\
+    interface Loopback100\n   description Tenant_A_OP_Zone_VTEP_DIAGNOSTICS\n   no\
+    \ shutdown\n   vrf Tenant_A_OP_Zone\n   ip address 10.255.1.4/32\n!\ninterface\
     \ Management1\n   description oob_management\n   no shutdown\n   vrf MGMT\n  \
     \ ip address 192.168.0.13/24\n!\ninterface Vlan110\n   description Tenant_A_OP_Zone_1\n\
     \   no shutdown\n   vrf Tenant_A_OP_Zone\n   ip address virtual 10.1.10.1/24\n\
@@ -139,16 +143,18 @@ CVP_CONFIGLETS:
     !\nvlan 110\n   name Tenant_A_OP_Zone_1\n!\nvlan 160\n   name Tenant_A_VMOTION\n\
     !\nvrf instance MGMT\n!\nvrf instance Tenant_A_OP_Zone\n!\ninterface Port-Channel4\n\
     \   description host2_PortChanne1\n   no shutdown\n   switchport\n   switchport\
-    \ access vlan 110\n   mlag 4\n!\ninterface Ethernet2\n   description P2P_LINK_TO_SPINE1_Ethernet4\n\
-    \   no shutdown\n   no switchport\n   ipv6 enable\n!\ninterface Ethernet3\n  \
-    \ description P2P_LINK_TO_SPINE2_Ethernet4\n   no shutdown\n   no switchport\n\
-    \   ipv6 enable\n!\ninterface Ethernet4\n   description host2_Eth1\n   no shutdown\n\
-    \   channel-group 4 mode active\n!\ninterface Ethernet5\n   description host2_Eth2\n\
-    \   no shutdown\n   channel-group 4 mode active\n!\ninterface Loopback0\n   description\
-    \ EVPN_Overlay_Peering\n   no shutdown\n   ip address 192.0.255.5/32\n!\ninterface\
-    \ Loopback1\n   description VTEP_VXLAN_Tunnel_Source\n   no shutdown\n   ip address\
-    \ 192.0.254.5/32\n!\ninterface Loopback100\n   description Tenant_A_OP_Zone_VTEP_DIAGNOSTICS\n\
-    \   no shutdown\n   vrf Tenant_A_OP_Zone\n   ip address 10.255.1.5/32\n!\ninterface\
+    \ access vlan 110\n   !\n    evpn ethernet-segment\n       identifier 0000:0000:0303:0202:0202\n\
+    \       route-target import 03:03:02:02:02:02\n   !\n   lacp system-id 0303.0202.0202\n\
+    !\ninterface Ethernet2\n   description P2P_LINK_TO_SPINE1_Ethernet4\n   no shutdown\n\
+    \   no switchport\n   ipv6 enable\n!\ninterface Ethernet3\n   description P2P_LINK_TO_SPINE2_Ethernet4\n\
+    \   no shutdown\n   no switchport\n   ipv6 enable\n!\ninterface Ethernet4\n  \
+    \ description host2_Eth1\n   no shutdown\n   channel-group 4 mode active\n!\n\
+    interface Ethernet5\n   description host2_Eth2\n   no shutdown\n   channel-group\
+    \ 4 mode active\n!\ninterface Loopback0\n   description EVPN_Overlay_Peering\n\
+    \   no shutdown\n   ip address 192.0.255.5/32\n!\ninterface Loopback1\n   description\
+    \ VTEP_VXLAN_Tunnel_Source\n   no shutdown\n   ip address 192.0.254.5/32\n!\n\
+    interface Loopback100\n   description Tenant_A_OP_Zone_VTEP_DIAGNOSTICS\n   no\
+    \ shutdown\n   vrf Tenant_A_OP_Zone\n   ip address 10.255.1.5/32\n!\ninterface\
     \ Management1\n   description oob_management\n   no shutdown\n   vrf MGMT\n  \
     \ ip address 192.168.0.14/24\n!\ninterface Vlan110\n   description Tenant_A_OP_Zone_1\n\
     \   no shutdown\n   vrf Tenant_A_OP_Zone\n   ip address virtual 10.1.10.1/24\n\
@@ -202,16 +208,18 @@ CVP_CONFIGLETS:
     !\nvlan 110\n   name Tenant_A_OP_Zone_1\n!\nvlan 160\n   name Tenant_A_VMOTION\n\
     !\nvrf instance MGMT\n!\nvrf instance Tenant_A_OP_Zone\n!\ninterface Port-Channel4\n\
     \   description host2_PortChanne1\n   no shutdown\n   switchport\n   switchport\
-    \ access vlan 110\n   mlag 4\n!\ninterface Ethernet2\n   description P2P_LINK_TO_SPINE1_Ethernet5\n\
-    \   no shutdown\n   no switchport\n   ipv6 enable\n!\ninterface Ethernet3\n  \
-    \ description P2P_LINK_TO_SPINE2_Ethernet5\n   no shutdown\n   no switchport\n\
-    \   ipv6 enable\n!\ninterface Ethernet4\n   description host2_Eth3\n   no shutdown\n\
-    \   channel-group 4 mode active\n!\ninterface Ethernet5\n   description host2_Eth4\n\
-    \   no shutdown\n   channel-group 4 mode active\n!\ninterface Loopback0\n   description\
-    \ EVPN_Overlay_Peering\n   no shutdown\n   ip address 192.0.255.6/32\n!\ninterface\
-    \ Loopback1\n   description VTEP_VXLAN_Tunnel_Source\n   no shutdown\n   ip address\
-    \ 192.0.254.6/32\n!\ninterface Loopback100\n   description Tenant_A_OP_Zone_VTEP_DIAGNOSTICS\n\
-    \   no shutdown\n   vrf Tenant_A_OP_Zone\n   ip address 10.255.1.6/32\n!\ninterface\
+    \ access vlan 110\n   !\n    evpn ethernet-segment\n       identifier 0000:0000:0303:0202:0202\n\
+    \       route-target import 03:03:02:02:02:02\n   !\n   lacp system-id 0303.0202.0202\n\
+    !\ninterface Ethernet2\n   description P2P_LINK_TO_SPINE1_Ethernet5\n   no shutdown\n\
+    \   no switchport\n   ipv6 enable\n!\ninterface Ethernet3\n   description P2P_LINK_TO_SPINE2_Ethernet5\n\
+    \   no shutdown\n   no switchport\n   ipv6 enable\n!\ninterface Ethernet4\n  \
+    \ description host2_Eth3\n   no shutdown\n   channel-group 4 mode active\n!\n\
+    interface Ethernet5\n   description host2_Eth4\n   no shutdown\n   channel-group\
+    \ 4 mode active\n!\ninterface Loopback0\n   description EVPN_Overlay_Peering\n\
+    \   no shutdown\n   ip address 192.0.255.6/32\n!\ninterface Loopback1\n   description\
+    \ VTEP_VXLAN_Tunnel_Source\n   no shutdown\n   ip address 192.0.254.6/32\n!\n\
+    interface Loopback100\n   description Tenant_A_OP_Zone_VTEP_DIAGNOSTICS\n   no\
+    \ shutdown\n   vrf Tenant_A_OP_Zone\n   ip address 10.255.1.6/32\n!\ninterface\
     \ Management1\n   description oob_management\n   no shutdown\n   vrf MGMT\n  \
     \ ip address 192.168.0.15/24\n!\ninterface Vlan110\n   description Tenant_A_OP_Zone_1\n\
     \   no shutdown\n   vrf Tenant_A_OP_Zone\n   ip address virtual 10.1.10.1/24\n\

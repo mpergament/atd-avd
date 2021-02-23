@@ -415,7 +415,7 @@ interface Ethernet5
 
 | Interface | Description | Type | Mode | VLANs | Native VLAN | Trunk Group | LACP Fallback Timeout | LACP Fallback Mode | MLAG ID | EVPN ESI |
 | --------- | ----------- | ---- | ---- | ----- | ----------- | ------------| --------------------- | ------------------ | ------- | -------- |
-| Port-Channel4 | host2_PortChanne1 | switched | access | 110 | - | - | - | - | 4 | - |
+| Port-Channel4 | host2_PortChanne1 | switched | access | 110 | - | - | - | - | - | 0000:0000:0303:0202:0202 |
 
 ### Port-Channel Interfaces Device Configuration
 
@@ -426,7 +426,12 @@ interface Port-Channel4
    no shutdown
    switchport
    switchport access vlan 110
-   mlag 4
+   !
+    evpn ethernet-segment
+       identifier 0000:0000:0303:0202:0202
+       route-target import 03:03:02:02:02:02
+   !
+   lacp system-id 0303.0202.0202
 ```
 
 ## Loopback Interfaces

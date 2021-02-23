@@ -17,6 +17,7 @@ servers:
           state: present
           description: PortChanne1
           mode: active
+          short_esi: 0303:0202:0101
   host2:
     rack: pod2
     adapters:
@@ -29,3 +30,4 @@ servers:
           state: present
           description: PortChanne1
           mode: active
+          short_esi: 0303:0202:0202
